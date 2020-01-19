@@ -1,8 +1,8 @@
 #!/usr/bin/python
 
 '''
-This helper script will take an integer input representing a VLAN ID and output the
-HSRP vMAC for that VLAN.
+This helper script will take an integer input representing a VLAN ID and
+output the HSRP vMAC for that VLAN.
 '''
 
 import sys

@@ -1,7 +1,9 @@
 #!/usr/bin/python
 
 '''
-This script will convert between different MAC address formats (4-Dot, standard)
+This script will convert between different MAC address formats
+(4-Dot, standard)
+
 To do this bash:  sed 's/\://g;s/.\{4\}/&./g;s/\.$//g' 00:50:56:9A:7A:5D
 Example:
   00:50:56:9A:7A:5D > 0050.569A.7A5D
@@ -17,7 +19,7 @@ import string
 
 
 def normalize(mac):
-    mac = re.sub('[\.\:]', '', mac)
+    mac = re.sub('[\.\:\-]', '', mac)
     return mac
 
 
