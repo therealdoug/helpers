@@ -1,0 +1,18 @@
+{%- macro remove_empty(item) -%}
+  {%- if item is string and item != '' -%}
+{{ item }}
+  {%- elif item is sequence and item is not mapping -%}
+    {%- for seq in item if seq -%}
+- {{ remove_empty(seq) | indent(2) }}
+    {%- endfor -%}
+  {%- elif item is mapping -%}
+    {%- for policy, value in item.items() if value -%}
+      {%- if value is string -%}
+{{ policy }}: {{ remove_empty(value) | indent(2) }}
+      {% elif value is sequence and value is not mapping -%}
+{{ policy }}:
+{{ remove_empty(value) | indent(width=2, first=True) }}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+{%- endmacro -%}
