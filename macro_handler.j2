@@ -9,7 +9,7 @@
     {%- for policy, value in item.items() if value -%}
       {%- if value is string -%}
 {{ policy }}: {{ remove_empty(value) | indent(2) }}
-      {% elif value is sequence and value is not mapping -%}
+      {% elif value is sequence -%}
 {{ policy }}:
 {{ remove_empty(value) | indent(width=2, first=True) }}
       {%- endif -%}
