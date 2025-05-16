@@ -11,7 +11,7 @@
 {{ policy }}: {{ remove_empty(value) | indent(2) }}
       {%- elif value and value is sequence and value is not mapping -%}
 {{ policy }}:
-{{ remove_empty(value) | indent(width=2, first=True) }}
+{{ remove_empty(value) | indent(2, True) }}
       {%- elif value.values()
         | reject('==', [])
         | reject('==', {})
@@ -19,8 +19,16 @@
         | length > 0 -%}
 {{ policy }}:
         {% for p,v in value.items() if v %}
-{{ p | indent(width=2, first=True)}}:
-{{ remove_empty(v) | indent(width=4, first=True) }}
+        {%- if v and v is string -%}
+{{ p | indent(2, True)}}: {{ remove_empty(v) }}
+        {%- elif v is mapping and v.values() | select('!=', '') | length > 0%}
+{{ p | indent(2, True)}}:
+{{ remove_empty(v) | indent(4, True) }}
+        {% elif v is sequence and v is not mapping and v | select('!=', '') | length > 0 %}
+{{ p | indent(2, True)}}:
+{{ remove_empty(v) | indent(4, True) }}
+        {% else %}
+        {%- endif -%}
         {%- endfor -%}
       {% endif -%}
     {%- endfor -%}
